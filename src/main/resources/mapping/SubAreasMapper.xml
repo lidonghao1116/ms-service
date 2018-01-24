@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.SubAreasMapper">
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.AreasEntity">
+    <id column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+    <result column="AREA_NAME" jdbcType="VARCHAR" property="areaName" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="AREA_LEVEL" jdbcType="VARCHAR" property="areaLevel" />
+  </resultMap>
+
+    <select id="getCityKV" resultType="java.util.HashMap">
+        select
+        CODE area_code, area_name
+        from sub_areas
+    </select>
+
+    <select id="getProvinces" resultMap="BaseResultMap">
+        select
+        CODE area_code, area_name
+        from sub_areas
+        where AREA_LEVEL = '01'
+    </select>
+
+    <select id="getCities" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        CODE area_code, area_name
+        from sub_areas
+        where AREA_LEVEL = '02'
+        and PARENT_CODE = #{province}
+    </select>
+
+
+</mapper>

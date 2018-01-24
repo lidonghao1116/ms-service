@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.CoursesConfigsMapper">
+	<resultMap id="BaseResultMap"
+		type="com.jiacer.modules.mybatis.entity.CoursesConfigsEntity">
+		<id column="course_id" jdbcType="INTEGER" property="courseId" />
+		<id column="configs_code" jdbcType="VARCHAR" property="configsCode" />
+		<result column="configs_name" jdbcType="VARCHAR" property="configsName" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		course_id, configs_code, configs_name
+	</sql>
+
+	<insert id="insert"
+		parameterType="com.jiacer.modules.mybatis.entity.CoursesConfigsEntity">
+		insert into courses_configs
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="configsCode != null">
+				configs_code,
+			</if>
+			<if test="configsName != null">
+				configs_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="courseId != null">
+				#{courseId,jdbcType=INTEGER},
+			</if>
+			<if test="configsCode != null">
+				#{configsCode,jdbcType=VARCHAR},
+			</if>
+			<if test="configsName != null">
+				#{configsName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update"
+		parameterType="com.jiacer.modules.mybatis.entity.CoursesConfigsEntity">
+		update courses_configs
+		<set>
+			<if test="configsName != null">
+				configs_name = #{configsName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where course_id = #{courseId,jdbcType=INTEGER}
+		and configs_code = #{configsCode,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="getOptionsByCourseId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select  <include refid="Base_Column_List" />
+		from courses_configs
+	    where course_id = #{courseId,jdbcType=INTEGER}
+	    ORDER BY configs_code desc
+	</select>
+
+</mapper>

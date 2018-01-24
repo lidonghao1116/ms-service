@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.CourseQuestionSumMapper">
+	<resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.CourseQuestionSumEntity">
+        <result column="course_id" jdbcType="INTEGER" property="courseId" />
+		<result column="subject_type" jdbcType="VARCHAR" property="type"/>
+		<result column="subject_count" jdbcType="VARCHAR" property="count"/>
+		<result column="subject_score" jdbcType="VARCHAR" property="score"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		course_id,subject_type,subject_count,subject_score
+	</sql>
+	<select id="getById" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from template_info t
+		where t.course_id = #{courseId}
+	</select>
+
+	<select id="find" parameterType="com.jiacer.modules.mybatis.entity.CourseQuestionSumEntity" resultMap="BaseResultMap">
+	  	select
+	    <include refid="Base_Column_List" />
+	    from template_info
+	    where is_usable = 1 and course_id=#{courseId} and subject_type=#{type}
+  	</select>
+
+
+</mapper>

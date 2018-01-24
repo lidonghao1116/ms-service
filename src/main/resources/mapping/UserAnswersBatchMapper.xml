@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.UserAnswersBatchMapper">
+    <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.model.UserAnswersBatch">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="USER_ID" jdbcType="INTEGER" property="userId"/>
+        <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="FINISH_TIME" jdbcType="TIMESTAMP" property="finishTime"/>
+        <result column="SCORE" jdbcType="DECIMAL" property="score"/>
+        <result column="IS_FINISHED" jdbcType="VARCHAR" property="isFinished"/>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"/>
+        <result column="course_id" jdbcType="INTEGER" property="courseId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, USER_ID, START_TIME, END_TIME, FINISH_TIME, SCORE, IS_FINISHED, type_id, course_id
+    </sql>
+    <select id="getById" parameterType="java.lang.Integer"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_answers_batch
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getByUserId" parameterType="map"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_answers_batch
+        where user_id = #{userId} and course_id=#{courseId} and IS_FINISHED = 1 ORDER BY ID DESC
+    </select>
+
+    <insert id="insert"
+            parameterType="com.jiacer.modules.mybatis.entity.UserAnswersBatchEntity" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into user_answers_batch
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="startTime != null">
+                START_TIME,
+            </if>
+            <if test="endTime != null">
+                END_TIME,
+            </if>
+            <if test="finishTime != null">
+                FINISH_TIME,
+            </if>
+            <if test="score != null">
+                SCORE,
+            </if>
+            <if test="isFinished != null">
+                IS_FINISHED,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="courseId != null">
+                course_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="isFinished != null">
+                #{isFinished,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="courseId != null">
+                #{courseId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="update"
+            parameterType="com.jiacer.modules.mybatis.entity.UserAnswersBatchEntity">
+        update user_answers_batch
+        <set>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                START_TIME = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                END_TIME = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="score != null">
+                SCORE = #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="isFinished != null">
+                IS_FINISHED = #{isFinished,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="courseId != null">
+                course_id = #{courseId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <resultMap id="learnRecordsMap" type="com.jiacer.modules.mybatis.entity.extend.LearnRecordEntity">
+        <result column="userId" jdbcType="INTEGER" property="userId"/>
+        <result column="couresId" jdbcType="INTEGER" property="couresId"/>
+        <result column="couresInfoId" jdbcType="INTEGER" property="couresInfoId"/>
+        <result column="answersNum" jdbcType="INTEGER" property="answersNum"/>
+        <result column="scores" jdbcType="DECIMAL" property="scores"/>
+    </resultMap>
+
+    <select id="getLearnRecord" parameterType="map" resultMap="learnRecordsMap">
+        SELECT USER_ID as 'userId',COUNT(0) as 'answersNum',MAX(SCORE) as 'scores' ,type_id as 'couresId', course_id as 'courseInfoId' FROM
+        user_answers_batch
+        <where>
+                IS_FINISHED = 1
+            <if test="typeId != null">
+                and type_id = #{couresId,jdbcType=INTEGER}
+            </if>
+            <if test="courseInfoId != null">
+                and course_Id = #{courseInfoId,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and USER_ID = #{userId,jdbcType=INTEGER}
+            </if>
+        </where>
+        GROUP BY USER_ID order by max(id) desc
+    </select>
+
+
+    <select id="getUserMaxRecords" parameterType="map" resultMap="learnRecordsMap">
+        SELECT USER_ID as 'userId',COUNT(0) as 'answersNum',MAX(SCORE) as 'scores' ,type_id as 'couresId', course_id as 'courseInfoId' FROM
+        user_answers_batch
+        where IS_FINISHED = 1
+        <if test="couresId != null">
+        and type_id = #{couresId,jdbcType=INTEGER}
+        </if>
+        <if test="couresInfoId != null">
+        and course_id = #{couresInfoId,jdbcType=INTEGER}
+        </if>
+        and USER_ID = #{userId,jdbcType=INTEGER}
+        GROUP BY USER_ID  order by max(id) desc
+    </select>
+</mapper>

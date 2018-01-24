@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.SequeGenerateMapper">
+
+    <select id="getMaxSerialNum" resultType="int" parameterType="map">
+        select num from seque_generate where date=#{date} and type=#{type}
+    </select>
+
+    <select id="generateSN" parameterType="map">
+        update seque_generate set num = #{num}, generate_time=now() where date=#{date} and type=#{type}
+    </select>
+
+    <insert id="initGenerator" parameterType="map">
+        insert into seque_generate(date,num, type, generate_time) values(#{date},#{num}, #{type}, now())
+    </insert>
+
+</mapper>

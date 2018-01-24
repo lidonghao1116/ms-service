@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.LearnTypesMapper">
+	<resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.LearnTypesEntity">
+	 	<id column="id" jdbcType="INTEGER" property="id" />
+	    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+	    <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+	    <result column="is_usable" jdbcType="VARCHAR" property="isUsable" />
+	    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+	    <result column="add_account" jdbcType="VARCHAR" property="addAccount" />
+	    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+	    <result column="modify_account" jdbcType="VARCHAR" property="modifyAccount" />
+	    <result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="total_hours" jdbcType="INTEGER" property="totalHours" />
+		<result column="hand" jdbcType="INTEGER" property="totalHours" />
+	    <result column="exam_type" jdbcType="VARCHAR" property="examType" />
+	    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+	    <result column="exam_fee" jdbcType="DECIMAL" property="examFee" />
+	    <result column="certificate_fee" jdbcType="DECIMAL" property="certificateFee" />
+	    <result column="other_fee" jdbcType="DECIMAL" property="otherFee" />
+		<result column="is_need_has_pf" jdbcType="VARCHAR" property="isNeedHasPf" />
+		<result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, type_name, sort_no, is_usable, add_time, add_account, modify_time, modify_account,
+		status, total_hours, exam_type, remarks, exam_fee, certificate_fee, other_fee,
+		is_need_has_pf
+	</sql>
+	<sql id="Base_Column_List_With_School">
+		t.id, t.type_name, t.sort_no, t.is_usable, t.add_time, t.add_account, t.modify_time, t.modify_account,
+		t.status, t.total_hours, t.exam_type, t.remarks, t.exam_fee, t.certificate_fee, t.other_fee,
+		t.is_need_has_pf, i.school_name
+	</sql>
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List_With_School" />
+		from learn_types t , institution_info i
+		where t.institution_info_id=i.id and t.ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="getUserLearnTypes" parameterType="com.jiacer.modules.mybatis.entity.LearnTypesEntity" resultMap="BaseResultMap">
+		SELECT B.type_name,B.id
+		FROM user_courses A
+		LEFT JOIN learn_types B
+		ON A.type_id=B.id
+		<where>
+			<if test="userId != null">
+	        	A.user_id = #{userId,jdbcType=VARCHAR}
+	      	</if>
+		</where>
+	</select>
+	
+	
+	<select id="getCourseList" parameterType="com.jiacer.modules.mybatis.entity.LearnTypesEntity"
+		resultMap="BaseResultMap">
+		select
+		t.id, t.type_name, t.sort_no, t.is_usable, t.add_time, t.add_account, t.modify_time, t.modify_account,
+		t.status, t.total_hours, t.exam_type, t.remarks, t.exam_fee, t.certificate_fee, t.other_fee,
+		t.is_need_has_pf,s.school_name
+		from learn_types t left join institution_info s on t.institution_info_id=s.id
+		where t.ID in
+		<foreach item="item" index="index" collection="courseIds" open="(" separator="," close=")">
+		  #{item}
+		</foreach>
+	</select>
+	
+	<select id="findAllList" parameterType="com.jiacer.modules.mybatis.entity.LearnTypesEntity" resultMap="BaseResultMap">
+	  	select 
+	    <include refid="Base_Column_List" />
+	    from learn_types
+	    <where>
+	    	<if test="isUsable != null and isUsable != ''">
+	    		is_usable = #{isUsable,jdbcType=VARCHAR}
+	    	</if>
+	    	<if test="status != null and status != ''">
+	    		and status = #{status,jdbcType=VARCHAR}
+	    	</if>
+	    </where>
+	    order by add_time desc
+  	</select>
+	
+
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.AnswersMapper">
+	<resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.model.Answers">
+	    <id column="ID" jdbcType="INTEGER" property="id" />
+	    <result column="ANSWER_DESC" jdbcType="VARCHAR" property="answerDesc" />
+	    <result column="QUESTIONS_ID" jdbcType="INTEGER" property="questionsId" />
+	    <result column="IS_ANSWER" jdbcType="VARCHAR" property="isAnswer" />
+	    <result column="IS_USABLE" jdbcType="VARCHAR" property="isUsable" />
+  	</resultMap>
+	<sql id="Base_Column_List">
+	  ID, ANSWER_DESC, QUESTIONS_ID, IS_ANSWER, IS_USABLE
+	</sql>
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from answers
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.AnswersEntity">
+		insert into answers
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        ID,
+	      </if>
+	      <if test="answerDesc != null">
+	        ANSWER_DESC,
+	      </if>
+	      <if test="questionsId != null">
+	        QUESTIONS_ID,
+	      </if>
+	      <if test="isAnswer != null">
+	        IS_ANSWER,
+	      </if>
+	      <if test="isUsable != null">
+	        IS_USABLE,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        #{id,jdbcType=INTEGER},
+	      </if>
+	      <if test="answerDesc != null">
+	        #{answerDesc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="questionsId != null">
+	        #{questionsId,jdbcType=INTEGER},
+	      </if>
+	      <if test="isAnswer != null">
+	        #{isAnswer,jdbcType=VARCHAR},
+	      </if>
+	      <if test="isUsable != null">
+	        #{isUsable,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+	</insert>
+	<update id="update" parameterType="com.jiacer.modules.mybatis.entity.AnswersEntity">
+		update answers
+		<set>
+	      <if test="answerDesc != null">
+	        ANSWER_DESC = #{answerDesc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="questionsId != null">
+	        QUESTIONS_ID = #{questionsId,jdbcType=INTEGER},
+	      </if>
+	      <if test="isAnswer != null">
+	        IS_ANSWER = #{isAnswer,jdbcType=VARCHAR},
+	      </if>
+	      <if test="isUsable != null">
+	        IS_USABLE = #{isUsable,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="findAllList" parameterType="com.jiacer.modules.mybatis.entity.AnswersEntity" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_answers
+		<where>
+			<if test="userId != null">
+				QUESTIONS_ID = #{questionsId,jdbcType=INTEGER}
+			</if>
+			<if test="batchId != null">
+				and IS_USABLE = #{isUsable,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+</mapper>

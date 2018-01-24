@@ -1,0 +1,25 @@
+{
+  "latest": "1.0",
+  "1.0": {
+    "schema": "http://s.gs.com",
+    "root": "http://s.gs.com/s",
+    "auth": "http://s.gs.com/s/user",
+    "wechat": "http://s.gs.com/s/user",
+    "user": "http://s.gs.com/s/user",
+    "order": "http://s.gs.com/s/user",
+    "house_keeping": "http://s.gs.com/s/user",
+    "common": "http://s.gs.com/s/user",
+    "customer_server": "http://s.gs.com/s/user",
+    "job_recruit": "http://s.gs.com/s/user",
+    "member": "http://s.gs.com/s/user",
+    "payment": "http://s.gs.com/s/user",
+    "staffs": "http://s.gs.com/s/user",
+    "tenant": "http://s.gs.com/s/user",
+    "service": "http://s.gs.com/s/user",
+    "version_info": {
+      "version": "1.0",
+      "issuing_date": "2017-08-10",
+      "tag": "release"
+    }
+  }
+}

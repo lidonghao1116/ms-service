@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.UserCertMapper">
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.clientInterface.model.CertInfo">
+    <result column="work_type" jdbcType="VARCHAR" property="workType" />
+    <result column="authenticate_grade" jdbcType="VARCHAR" property="authenticateGrade"/>
+    <result column="theory_scores" jdbcType="VARCHAR" property="theoryScores"/>
+    <result column="po_scores" jdbcType="VARCHAR" property="poScores"/>
+    <result column="comprehensive_scores" jdbcType="VARCHAR" property="comprehensiveScores"/>
+    <result column="ability_scores" jdbcType="VARCHAR" property="abilityScores"/>
+    <result column="issuing_date" jdbcType="TIMESTAMP" javaType="java.util.Date" property="issuingDate"/>
+    <result column="deal_result" jdbcType="VARCHAR" property="dealResult"/>
+    <result column="exam_result" jdbcType="VARCHAR" property="examResult"/>
+    <result column="certificate_no" jdbcType="VARCHAR" property="certificateNo"/>
+    <result column="cert_authority_id" jdbcType="VARCHAR" property="certAuthorityId"/>
+    <result column="cert_org_name" jdbcType="VARCHAR" property="certOrgName" />
+    <result column="cert_name" jdbcType="VARCHAR" property="certName" />
+    <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.jiacer.modules.clientInterface.model.CertInfo">
+  </insert>
+  <update id="update" parameterType="com.jiacer.modules.clientInterface.model.CertInfo">
+
+  </update>
+  
+  <select id="getByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    type_of_work  as work_type,
+    cert_name as cert_name,
+    us.authenticate_grade,
+    us.theory_scores,
+    us.po_scores,
+    us.comprehensive_scores,
+    us.ability_scores,
+    us.deal_result,
+    us.issuing_date,
+    us.certificate_no,
+    us.cert_authority_id,
+    us.exam_result,
+    ca.authority_name as cert_org_name,
+    cp.`text` as grade_name
+    from
+    user_scores us left join cert_authority ca on us.cert_authority_id = ca.authority_id
+    inner join cfg_param cp on us.authenticate_grade=cp.VALUE and cp.type=25
+    where
+      us.user_id = #{userId,jdbcType=INTEGER} and us.exam_result!="02" and us.exam_result!="03"
+    
+  </select>
+</mapper>

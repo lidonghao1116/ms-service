@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.ClassTimesTemplateMapper">
+	<resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.model.ClassTimesTemplate">
+        <result column="id" jdbcType="VARCHAR" property="templateId" />
+		<result column="template_name" jdbcType="VARCHAR" property="templateName"/>
+		<result column="open_cycle" jdbcType="VARCHAR" property="openCycle"/>
+		<result column="begin_time" jdbcType="VARCHAR" property="beginTime"/>
+		<result column="end_time" jdbcType="VARCHAR" property="endTime"/>
+		<result column="template_type" jdbcType="VARCHAR" property="templateType"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		t.id,
+		t.template_name,
+		t.open_cycle,
+		t.begin_time,
+		t.end_time,
+		t.template_type
+	</sql>
+	<select id="getById" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from courses_time_template t
+		where t.id = #{templateId}
+	</select>
+
+	<select id="findByLearnType" parameterType="java.lang.String" resultMap="BaseResultMap">
+	  	select
+	    <include refid="Base_Column_List" />
+	    from courses_time_template t , course_time_table r
+	    where t.id = r.template_id and r.learn_types_id = #{id}
+  	</select>
+
+
+</mapper>

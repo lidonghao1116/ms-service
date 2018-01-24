@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.TypeChapterMapper">
+	<resultMap id="BaseResultMap"
+		type="com.jiacer.modules.mybatis.entity.TypeChapterEntity">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="type_id" jdbcType="INTEGER" property="typeId" />
+		<result column="chapter_code" jdbcType="VARCHAR" property="chapterCode" />
+		<result column="chapter_name" jdbcType="VARCHAR" property="chapterName" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, type_id, chapter_code, chapter_name
+	</sql>
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from type_chapter
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.TypeChapterEntity">
+		insert into type_chapter
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="typeId != null">
+				type_id,
+			</if>
+			<if test="chapterCode != null">
+				chapter_code,
+			</if>
+			<if test="chapterName != null">
+				chapter_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="typeId != null">
+				#{typeId,jdbcType=INTEGER},
+			</if>
+			<if test="chapterCode != null">
+				#{chapterCode,jdbcType=VARCHAR},
+			</if>
+			<if test="chapterName != null">
+				#{chapterName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.jiacer.modules.mybatis.entity.TypeChapterEntity">
+		update type_chapter
+		<set>
+			<if test="typeId != null">
+				type_id = #{typeId,jdbcType=INTEGER},
+			</if>
+			<if test="chapterCode != null">
+				chapter_code = #{chapterCode,jdbcType=VARCHAR},
+			</if>
+			<if test="chapterName != null">
+				chapter_name = #{chapterName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	
+		
+	<select id="getTypeChapters" parameterType="com.jiacer.modules.mybatis.entity.TypeChapterEntity" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		from type_chapter
+		<where>
+			<if test="typeId != null">
+	        	type_id = #{typeId,jdbcType=INTEGER}
+	      	</if>
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.CourseOnlineMapper">
+
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.CourseOnlineEntity">
+	<id column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="course_type" jdbcType="VARCHAR" property="courseType" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="image" jdbcType="VARCHAR" property="image"/>
+    <result column="banner" jdbcType="VARCHAR" property="banner"/>
+    <result column="fit_service" jdbcType="VARCHAR" property="fitService" />
+    <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="re_sign" jdbcType="VARCHAR" property="reSign" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="course_time" jdbcType="VARCHAR" property="courseTime" />
+    <result column="is_own" jdbcType="VARCHAR" property="isOwn" />
+  </resultMap>
+
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    c.course_id,
+    c.course_name,
+    c.course_type,
+    c.price,
+    c.image,
+    c.banner,
+    c.fit_service,
+    c.sort_no,
+    c.summary,
+    c.creat_time,
+    c.re_sign,
+    c.status,
+    c.course_time
+    from course_info c
+    where c.course_id = #{courseId}
+  </select>
+
+  <select id="getByIdWithUser" parameterType="map" resultMap="BaseResultMap">
+    select
+    c.course_id,
+    c.course_name,
+    c.course_type,
+    c.price,
+    c.fit_service,
+    c.sort_no,
+    c.image,
+    c.banner,
+    c.summary,
+    c.creat_time,
+    c.re_sign,
+    c.status,
+    c.course_time
+    <if test="userId != null">
+      ,if(o.order_no is null, 0, 1) as is_own
+    </if>
+    <if test="userId == null">
+      '0' as is_own
+    </if>
+    from course_info c left join orders o on c.course_id=o.course_id and o.pay_type='02'
+    <if test="userId != null">
+      and o.user_id=#{userId}
+    </if>
+    where c.course_id = #{courseId}
+  </select>
+
+  <select id="findListWithUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    c.course_id,
+    c.course_name,
+    c.course_type,
+    if(o.order_no is null, c.price, 0) as price,
+    c.fit_service,
+    c.sort_no,
+    c.image,
+    c.banner,
+    c.summary,
+    c.creat_time,
+    c.re_sign,
+    c.status,
+    c.course_time,
+    if(o.order_no is null, 0, 1) as is_own
+    from course_info c left join orders o on c.course_id=o.course_id and o.user_id=#{value} and o.pay_type='02'
+    where status='01'
+    order by c.sort_no asc
+  </select>
+
+  <select id="findListByUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    c.course_id,
+    c.course_name,
+    c.course_type,
+    0 as price,
+    c.fit_service,
+    c.sort_no,
+    c.summary,
+    c.image,
+    c.banner,
+    c.creat_time,
+    c.re_sign,
+    c.status,
+    c.course_time,
+    1 as is_own
+    from course_info c , orders o where c.course_id=o.course_id and o.user_id=#{value}
+    and pay_type='02' order by o.add_time desc
+  </select>
+
+  <insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.CourseOnlineEntity">
+
+  </insert>
+  <update id="update" parameterType="com.jiacer.modules.mybatis.entity.CourseOnlineEntity">
+
+  </update>
+
+
+</mapper>

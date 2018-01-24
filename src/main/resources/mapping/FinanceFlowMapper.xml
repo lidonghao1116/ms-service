@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.FinanceFlowMapper">
+    <resultMap id="BaseResultMap" type="com.jiacer.modules.clientInterface.model.FinanceFlowInfo">
+        <id column="finance_no" jdbcType="VARCHAR" property="financeNo" />
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo"/>
+        <result column="pay_no" jdbcType="VARCHAR" property="payNo"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="flow_type" jdbcType="VARCHAR" property="flowType"/>
+        <result column="trade_channel" jdbcType="VARCHAR" property="tradeChannel"/>
+        <result column="origin_channel" jdbcType="VARCHAR" property="originChannel"/>
+        <result column="pay_status" jdbcType="VARCHAR" property="payStatus"/>
+        <result column="direction" jdbcType="VARCHAR" property="direction"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="add_account" jdbcType="VARCHAR" property="addAccount"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modifyAccount" jdbcType="VARCHAR" property="modifyAccount"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        finance_no,user_id,out_trade_no,pay_no,amount,flow_type,trade_channel,origin_channel,direction,
+         status,pay_status,remark,add_time, add_account, modify_time, modify_account
+    </sql>
+    <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from finance_flow
+        where finance_no = #{financeNo}
+    </select>
+
+    <insert id="insert" parameterType="com.jiacer.modules.clientInterface.model.FinanceFlowInfo">
+        insert into finance_flow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="financeNo != null">finance_no,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="outTradeNo !=null">out_trade_no,</if>
+            <if test="payNo !=null">pay_no,</if>
+            <if test="amount != null">amount,</if>
+            <if test="flowType!=null">flow_type,</if>
+            <if test="tradeChannel!=null">trade_channel,</if>
+            <if test="originChannel!=null">origin_channel,</if>
+            <if test="payStatus!=null">pay_status,</if>
+            <if test="direction!=null">direction,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="addAccount!=null">add_account,</if>
+            add_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="financeNo != null">#{financeNo},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="outTradeNo !=null">#{outTradeNo},</if>
+            <if test="payNo !=null">#{payNo},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="flowType!=null">#{flowType},</if>
+            <if test="tradeChannel!=null">#{tradeChannel},</if>
+            <if test="originChannel!=null">#{originChannel},</if>
+            <if test="payStatus!=null">#{payStatus},</if>
+            <if test="direction!=null">#{direction},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="addAccount!=null">#{addAccount},</if>
+            now()
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.jiacer.modules.clientInterface.model.FinanceFlowInfo">
+        update finance_flow
+        <set>
+            <if test="payStatus != null">pay_status=#{payStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="modifyAccount!=null">modify_account = #{modifyAccount},</if>
+            modify_time = now()
+        </set>
+        where finance_no = #{financeNo}
+    </update>
+
+
+    <select id="get" parameterType="com.jiacer.modules.clientInterface.model.FinanceFlowInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from finance_flow
+        <where>
+            <if test="financeNo != null and financeNo != ''">
+                finance_no = #{financeNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllList" parameterType="com.jiacer.modules.clientInterface.model.FinanceFlowInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from finance_flow
+        <where>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="findByOutTradeNo" parameterType="com.jiacer.modules.clientInterface.model.FinanceFlowInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from finance_flow
+        where out_trade_no = #{outTradeNo}
+    </select>
+
+</mapper>

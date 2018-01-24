@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.WechatAuthrizeInfoMapper">
+	<resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.WechatAuthrizeInfoEntity">
+		<id column="OPEN_ID" jdbcType="VARCHAR" property="openId" />
+		<result column="NICK" jdbcType="VARCHAR" property="nick" />
+		<result column="HEAD_IMG_URL" jdbcType="VARCHAR" property="headImgUrl" />
+		<result column="SEX" jdbcType="VARCHAR" property="sex" />
+		<result column="ACCESS_TOKEN" jdbcType="VARCHAR" property="accessToken" />
+		<result column="REFRESH_TOKEN" jdbcType="VARCHAR" property="refreshToken" />
+		<result column="EXPIRING_TIME" jdbcType="TIMESTAMP" property="expiringTime" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		OPEN_ID, NICK, HEAD_IMG_URL, SEX, ACCESS_TOKEN, REFRESH_TOKEN, EXPIRING_TIME
+	</sql>
+	<select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from wechat_authrize_info
+		where OPEN_ID = #{openId,jdbcType=VARCHAR}
+	</select>
+
+	<insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.WechatAuthrizeInfoEntity">
+		insert into wechat_authrize_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="openId != null">
+				OPEN_ID,
+			</if>
+			<if test="nick != null">
+				NICK,
+			</if>
+			<if test="headImgUrl != null">
+				HEAD_IMG_URL,
+			</if>
+			<if test="sex != null">
+				SEX,
+			</if>
+			<if test="accessToken != null">
+				ACCESS_TOKEN,
+			</if>
+			<if test="refreshToken != null">
+				REFRESH_TOKEN,
+			</if>
+			<if test="expiringTime != null">
+				EXPIRING_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="openId != null">
+				#{openId,jdbcType=VARCHAR},
+			</if>
+			<if test="nick != null">
+				#{nick,jdbcType=VARCHAR},
+			</if>
+			<if test="headImgUrl != null">
+				#{headImgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="accessToken != null">
+				#{accessToken,jdbcType=VARCHAR},
+			</if>
+			<if test="refreshToken != null">
+				#{refreshToken,jdbcType=VARCHAR},
+			</if>
+			<if test="expiringTime != null">
+				#{expiringTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.jiacer.modules.mybatis.entity.WechatAuthrizeInfoEntity">
+		update wechat_authrize_info
+		<set>
+			<if test="nick != null">
+				NICK = #{nick,jdbcType=VARCHAR},
+			</if>
+			<if test="headImgUrl != null">
+				HEAD_IMG_URL = #{headImgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="accessToken != null">
+				ACCESS_TOKEN = #{accessToken,jdbcType=VARCHAR},
+			</if>
+			<if test="refreshToken != null">
+				REFRESH_TOKEN = #{refreshToken,jdbcType=VARCHAR},
+			</if>
+			<if test="expiringTime != null">
+				EXPIRING_TIME = #{expiringTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where OPEN_ID = #{openId,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

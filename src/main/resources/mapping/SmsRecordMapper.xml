@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jiacer.modules.mybatis.dao.SmsRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.SmsRecordEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sms_id" property="smsId" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="content_type" property="contentType" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="failed_reason" property="failedReason" jdbcType="VARCHAR" />
+    <result column="sp_code" property="spCode" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="result_confrim_time" property="resultConfrimTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List">
+  	id, sms_id, mobile, content_type, content, result, failed_reason, sp_code, 
+    add_time, result_confrim_time
+  </sql>
+  <insert id="insert" parameterType="com.jiacer.modules.mybatis.model.SmsRecord" >
+    insert into sms_record (sms_id, mobile, 
+      content_type, content, result, 
+      failed_reason, sp_code, add_time, 
+      result_confrim_time)
+    values (#{smsId,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{contentType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, 
+      #{failedReason,jdbcType=VARCHAR}, #{spCode,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{resultConfrimTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="update" parameterType="com.jiacer.modules.mybatis.model.SmsRecord" >
+    update sms_record
+    set sms_id = #{smsId,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      content_type = #{contentType,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      failed_reason = #{failedReason,jdbcType=VARCHAR},
+      sp_code = #{spCode,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      result_confrim_time = #{resultConfrimTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getBySmsId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select <include refid="Base_Column_List"/>
+    from sms_record
+    where sms_id = #{smsId,jdbcType=VARCHAR}
+  </select>
+</mapper>

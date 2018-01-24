@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.UserScoresMapper">
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.UserScoresEntity">
+    <id column="class_id" jdbcType="INTEGER" property="classId" />
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="order_no" jdbcType="DECIMAL" property="orderNo" />
+    <result column="theory_scores" jdbcType="DECIMAL" property="theoryScores" />
+    <result column="po_scores" jdbcType="DECIMAL" property="poScores" />
+    <result column="exam_result" jdbcType="VARCHAR" property="examResult" />
+    <result column="deal_result" jdbcType="VARCHAR" property="dealResult" />
+    <result column="certificate_no" jdbcType="VARCHAR" property="certificateNo" />
+    <result column="makeup_exam_free" jdbcType="DECIMAL" property="makeupExamFree" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    class_id, user_id, order_no, theory_scores, po_scores, exam_result, deal_result, 
+    certificate_no, makeup_exam_free
+  </sql>
+  <select id="getByKey" parameterType="com.jiacer.modules.mybatis.model.UserScoresKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_scores
+    where class_id = #{classId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
+
+  <insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.UserScoresEntity">
+    insert into user_scores
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="theoryScores != null">
+        theory_scores,
+      </if>
+      <if test="poScores != null">
+        po_scores,
+      </if>
+      <if test="examResult != null">
+        exam_result,
+      </if>
+      <if test="dealResult != null">
+        deal_result,
+      </if>
+      <if test="certificateNo != null">
+        certificate_no,
+      </if>
+      <if test="makeupExamFree != null">
+        makeup_exam_free,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=DECIMAL},
+      </if>
+      <if test="theoryScores != null">
+        #{theoryScores,jdbcType=DECIMAL},
+      </if>
+      <if test="poScores != null">
+        #{poScores,jdbcType=DECIMAL},
+      </if>
+      <if test="examResult != null">
+        #{examResult,jdbcType=VARCHAR},
+      </if>
+      <if test="dealResult != null">
+        #{dealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null">
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="makeupExamFree != null">
+        #{makeupExamFree,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.jiacer.modules.mybatis.entity.UserScoresEntity">
+    update user_scores
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=DECIMAL},
+      </if>
+      <if test="theoryScores != null">
+        theory_scores = #{theoryScores,jdbcType=DECIMAL},
+      </if>
+      <if test="poScores != null">
+        po_scores = #{poScores,jdbcType=DECIMAL},
+      </if>
+      <if test="examResult != null">
+        exam_result = #{examResult,jdbcType=VARCHAR},
+      </if>
+      <if test="dealResult != null">
+        deal_result = #{dealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null">
+        certificate_no = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="makeupExamFree != null">
+        makeup_exam_free = #{makeupExamFree,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where class_id = #{classId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

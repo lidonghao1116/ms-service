@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.PartnersMapper">
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.PartnersEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="partner_code" jdbcType="VARCHAR" property="partnerCode" />
+    <result column="partner_type" jdbcType="VARCHAR" property="partnerType" />
+    <result column="partner_name" jdbcType="VARCHAR" property="partnerName" />
+    <result column="zip_code" jdbcType="VARCHAR" property="zipCode" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="county" jdbcType="VARCHAR" property="county" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="store_phone" jdbcType="VARCHAR" property="storePhone" />
+    <result column="brokerage_id" jdbcType="INTEGER" property="brokerageId" />
+    <result column="is_usable" jdbcType="VARCHAR" property="isUsable" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_account" jdbcType="VARCHAR" property="addAccount" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="modify_account" jdbcType="VARCHAR" property="modifyAccount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, partner_code, partner_type, partner_name, zip_code, province, city, county, address, 
+    contacts, contact_phone, store_phone, brokerage_id, is_usable, add_time, add_account, 
+    modify_time, modify_account
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from partners
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+ 
+  <insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.PartnersEntity">
+    insert into partners
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="partnerCode != null">
+        partner_code,
+      </if>
+      <if test="partnerType != null">
+        partner_type,
+      </if>
+      <if test="partnerName != null">
+        partner_name,
+      </if>
+      <if test="zipCode != null">
+        zip_code,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="county != null">
+        county,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="contacts != null">
+        contacts,
+      </if>
+      <if test="contactPhone != null">
+        contact_phone,
+      </if>
+      <if test="storePhone != null">
+        store_phone,
+      </if>
+      <if test="brokerageId != null">
+        brokerage_id,
+      </if>
+      <if test="isUsable != null">
+        is_usable,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addAccount != null">
+        add_account,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="modifyAccount != null">
+        modify_account,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCode != null">
+        #{partnerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerType != null">
+        #{partnerType,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerName != null">
+        #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null">
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null">
+        #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null">
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="storePhone != null">
+        #{storePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerageId != null">
+        #{brokerageId,jdbcType=INTEGER},
+      </if>
+      <if test="isUsable != null">
+        #{isUsable,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addAccount != null">
+        #{addAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyAccount != null">
+        #{modifyAccount,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.jiacer.modules.mybatis.entity.PartnersEntity">
+    update partners
+    <set>
+      <if test="partnerCode != null">
+        partner_code = #{partnerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerType != null">
+        partner_type = #{partnerType,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerName != null">
+        partner_name = #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null">
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null">
+        county = #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null">
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="storePhone != null">
+        store_phone = #{storePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerageId != null">
+        brokerage_id = #{brokerageId,jdbcType=INTEGER},
+      </if>
+      <if test="isUsable != null">
+        is_usable = #{isUsable,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addAccount != null">
+        add_account = #{addAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyAccount != null">
+        modify_account = #{modifyAccount,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="count" parameterType="map" resultType="int">
+  	select 
+    count(0)
+    from partners
+    <where>
+    	<if test="isUsable != null and isUsable != ''">
+    		is_usable = #{isUsable,jdbcType=VARCHAR}
+    	</if>
+    	<if test="partnerType != null">
+		  	and partner_type = #{partnerType,jdbcType=VARCHAR}
+		</if>
+		<if test="partnerName != null">
+		  	and partner_name like #{partnerName,jdbcType=VARCHAR}
+		</if>
+		<if test="province != null">
+		  	and province = #{province,jdbcType=VARCHAR}
+		</if>
+		<if test="city != null">
+		  	and city = #{city,jdbcType=VARCHAR}
+		</if>
+		<if test="county != null">
+		  	and county = #{county,jdbcType=VARCHAR}
+		</if>
+    	<if test="contactPhone != null and contactPhone != ''">
+        	and contact_phone = #{contactPhone,jdbcType=VARCHAR}
+      	</if>
+    </where>
+  </select>
+  
+  <select id="getPageList" parameterType="map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from partners
+    <where>
+    	<if test="isUsable != null and isUsable != ''">
+    		is_usable = #{isUsable,jdbcType=VARCHAR}
+    	</if>
+    	<if test="partnerType != null">
+		  	and partner_type = #{partnerType,jdbcType=VARCHAR}
+		</if>
+		<if test="partnerName != null">
+		  	and partner_name like #{partnerName,jdbcType=VARCHAR}
+		</if>
+		<if test="province != null">
+		  	and province = #{province,jdbcType=VARCHAR}
+		</if>
+		<if test="city != null">
+		  	and city = #{city,jdbcType=VARCHAR}
+		</if>
+		<if test="county != null">
+		  	and county = #{county,jdbcType=VARCHAR}
+		</if>
+    	<if test="contactPhone != null and contactPhone != ''">
+        	and contact_phone = #{contactPhone,jdbcType=VARCHAR}
+      	</if>
+    </where>
+    order by add_time desc
+    limit #{offset},#{pageSize}
+  </select>
+  
+    <select id="findAllList" parameterType="com.jiacer.modules.mybatis.entity.PartnersEntity" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from partners
+    <where>
+    	<if test="isUsable != null and isUsable != ''">
+    		is_usable = #{isUsable,jdbcType=VARCHAR}
+    	</if>
+    	<if test="partnerType != null and partnerType != ''">
+    		and partner_type = #{partnerType,jdbcType=VARCHAR}
+    	</if>
+    </where>
+    order by add_time desc
+  </select>
+</mapper>

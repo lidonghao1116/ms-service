@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.RedpackMapper">
+    <resultMap id="BaseResultMap" type="com.jiacer.modules.clientInterface.model.RedpackExtendInfo">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="inviter_id" jdbcType="INTEGER" property="inviterId"/>
+        <result column="inviter_name" jdbcType="VARCHAR" property="inviterName"/>
+        <result column="inviter_openid" jdbcType="VARCHAR" property="inviterOpenid"/>
+        <result column="inviter_mobile" jdbcType="VARCHAR" property="inviterMobile"/>
+        <result column="pay_stsatus" jdbcType="VARCHAR" property="payStatus" />
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="amount" jdbcType="DECIMAL" property="standAmount"/>
+        <result column="is_usable" jdbcType="VARCHAR" property="isUsable"/>
+        <result column="fail_code" jdbcType="VARCHAR" property="failCode"/>
+        <result column="fail_reason" jdbcType="VARCHAR" property="failReason"/>
+        <result column="is_need_retry" jdbcType="VARCHAR" property="isNeedRetry"/>
+        <result column="retry_times" jdbcType="INTEGER" property="retryTimes"/>
+        <result column="redpack_no" jdbcType="VARCHAR" property="redpackNo"/>
+        <result column="act_name" jdbcType="VARCHAR" property="actName"/>
+        <result column="request_info" jdbcType="VARCHAR" property="requestInfo"/>
+        <result column="response_info" jdbcType="VARCHAR" property="responseInfo"/>
+        <result column="send_time" jdbcType="TIMESTAMP" property="requestTime"/>
+        <result column="response_time" jdbcType="TIMESTAMP" property="responseTime"/>
+        <result column="is_reminded" jdbcType="VARCHAR" property="isReminded"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,order_no,user_name,inviter_id,inviter_name,inviter_openid,inviter_mobile,pay_status,status,amount,is_usable,
+        fail_code,fail_reason,is_need_retry,retry_times,redpack_no,act_name,request_info,response_info,send_time,
+        response_time,is_reminded
+    </sql>
+    <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from red_packet
+        where redpack_no = #{redpackNo,jdbcType=VARCHAR}
+    </select>
+    <select id="getListByUserId" parameterType="com.jiacer.modules.common.page.vo.RedpackVo" resultType="com.jiacer.modules.clientInterface.jsonResult.RedpackJsonData">
+        select
+        r.user_name as 'userName', r.amount, r.send_time as 'date',
+        (select o.order_desc from orders o where o.order_no=r.order_no) as 'courseName'
+        from red_packet r
+        where r.inviter_id=#{userId} and r.PAY_STATUS='02' and r.is_usable='1' order by r.send_time desc
+    </select>
+    <select id="total" parameterType="java.lang.Integer" resultType="java.util.Map">
+        select
+        count(1) as 'count',
+        sum(amount) as 'amount'
+        from red_packet r
+        where r.inviter_id=#{value} and r.PAY_STATUS='02' and r.is_usable='1'
+    </select>
+    <insert id="insert" parameterType="com.jiacer.modules.clientInterface.model.RedpackExtendInfo">
+        insert into red_packet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="inviterId != null">inviter_id,</if>
+            <if test="inviterName != null">inviter_name,</if>
+            <if test="inviterOpenid != null">inviter_openid,</if>
+            <if test="inviterMobile != null">inviter_mobile,</if>
+            <if test="payStatus != null">pay_status,</if>
+            <if test="status != null">status,</if>
+            <if test="standAmount != null">amount,</if>
+            <if test="isUsable != null">is_usable,</if>
+            <if test="failCode!=null">fail_code,</if>
+            <if test="failReason!=null">fail_reason,</if>
+            <if test="isNeedRetry!=null">is_need_retry,</if>
+            <if test="retryTimes!=null">retry_times,</if>
+            <if test="redpackNo != null">redpack_no,</if>
+            <if test="actName!=null">act_name,</if>
+            <if test="requestInfo!=null">request_info,</if>
+            <if test="requestTime!=null">request_time,</if>
+            <if test="requestTime!=null">send_time,</if>
+            <if test="isReminded != null">is_reminded,</if>
+            add_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="inviterId != null">#{inviterId},</if>
+            <if test="inviterName != null">#{inviterName},</if>
+            <if test="inviterOpenid != null">#{inviterOpenid},</if>
+            <if test="inviterMobile != null">#{inviterMobile},</if>
+            <if test="payStatus != null">#{payStatus},</if>
+            <if test="status != null">#{status},</if>
+            <if test="standAmount != null">#{standAmount},</if>
+            <if test="isUsable != null">#{isUsable},</if>
+            <if test="isNeedRetry!=null">#{isNeedRetry},</if>
+            <if test="retryTimes!=null">#{retryTimes},</if>
+            <if test="redpackNo != null">#{redpackNo},</if>
+            <if test="actName!=null">#{actName},</if>
+            <if test="requestInfo!=null">#{requestInfo},</if>
+            <if test="requestTime!=null">#{requestTime},</if>
+            <if test="requestTime!=null">#{requestTime},</if>
+            <if test="isReminded != null">#{isReminded},</if>
+            now()
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.jiacer.modules.clientInterface.model.RedpackExtendInfo">
+        update red_packet
+        <set>
+            <if test="payStatus!= null">
+                pay_status = #{payStatus},
+            </if>
+            <if test="failCode!=null">fail_code = #{failCode},</if>
+            <if test="failReason!=null">fail_reason = #{failReason},</if>
+            <if test="isNeedRetry != null">is_need_retry = #{isNeedRetry},</if>
+            <if test="retryTimes != null">retry_times = #{retryTimes},</if>
+            <if test="isReminded != null">is_reminded = #{isReminded},</if>
+            <if test="responseTime != null">response_time = #{responseTime},</if>
+            <if test="responseInfo != null">response_info = #{responseInfo},</if>
+            <if test="redpackWxNo != null">redpack_wx_no = #{redpackWxNo},</if>
+            modify_time = now()
+        </set>
+        where redpack_no = #{redpackNo}
+    </update>
+
+
+    <select id="get" parameterType="com.jiacer.modules.clientInterface.model.RedpackExtendInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from red_packet 1=1
+        <where>
+            <if test="payStatus != null and payStatus != ''">
+                and pay_status = #{payStatus}
+            </if>
+            <if test="isNeedRetry != null and isNeedRetry != ''">
+                and is_need_retry = #{isNeedRetry}
+            </if>
+            <if test="isReminded != null and isReminded != ''">
+                and is_reminded = #{isReminded}
+            </if>
+            <if test="retryTimes != null and retryTimes != ''">
+                and retry_times = #{retryTimes}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllList" parameterType="com.jiacer.modules.clientInterface.model.RedpackExtendInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from red_packet
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+</mapper>

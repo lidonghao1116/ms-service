@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.ApplyOrdersMapper">
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.ApplyOrdersEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="class_id" jdbcType="INTEGER" property="classNumber" />
+    <result column="is_exam" jdbcType="VARCHAR" property="isExam" />
+    <result column="is_staging" jdbcType="VARCHAR" property="isStaging" />
+    <result column="school_fee" jdbcType="DECIMAL" property="schoolFee" />
+    <result column="deposit" jdbcType="DECIMAL" property="deposit" />
+    <result column="book_free" jdbcType="DECIMAL" property="bookFree" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="first_pay" jdbcType="DECIMAL" property="firstPay" />
+    <result column="is_clear" jdbcType="VARCHAR" property="isClear" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime" />
+    <result column="handler" jdbcType="VARCHAR" property="handler" />
+    <result column="order_status" jdbcType="VARCHAR" property="orderStatus" />
+    <result column="handle_status" jdbcType="VARCHAR" property="handleStatus" />
+    <result column="package_id" jdbcType="INTEGER" property="packageId" />
+    <result column="order_amount" jdbcType="DECIMAL" property="orderAmount" />
+    <result column="order_type" jdbcType="VARCHAR" property="orderType" />
+    <result column="class_time" jdbcType="VARCHAR" property="classTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="is_has_pf" jdbcType="VARCHAR" property="isHasPf" />
+    <result column="makeup_fee" jdbcType="DECIMAL" property="makeupFee" />
+    <result column="user_age" jdbcType="INTEGER" property="userAge" />
+      <result column="package_name" jdbcType="VARCHAR" property="packageName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, course_id, class_id, is_exam, is_staging, school_fee, deposit, book_free,
+    remarks, first_pay, is_clear, order_time, handle_time, handler, order_status, handle_status, 
+    package_id, order_amount, order_type, class_time, modify_time, order_no,is_has_pf, 
+    makeup_fee,user_age
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from apply_orders
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.ApplyOrdersEntity">
+	insert into apply_orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="classNumber != null">
+          class_id,
+      </if>
+      <if test="isExam != null">
+        is_exam,
+      </if>
+      <if test="isStaging != null">
+        is_staging,
+      </if>
+      <if test="schoolFee != null">
+        school_fee,
+      </if>
+      <if test="deposit != null">
+        deposit,
+      </if>
+      <if test="bookFree != null">
+        book_free,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="firstPay != null">
+        first_pay,
+      </if>
+      <if test="isClear != null">
+        is_clear,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+      <if test="handleTime != null">
+        handle_time,
+      </if>
+      <if test="handler != null">
+        handler,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="handleStatus != null">
+        handle_status,
+      </if>
+      <if test="packageId != null">
+        package_id,
+      </if>
+      <if test="orderAmount != null">
+        order_amount,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="classTime != null">
+        class_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="isHasPf != null">
+        is_has_pf,
+      </if>
+        <if test="makeupFee != null">
+            makeup_fee,
+        </if>
+        <if test="schoolId != null">
+            institution_info_id,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="classNumber != null">
+        #{classNumber,jdbcType=INTEGER},
+      </if>
+      <if test="isExam != null">
+        #{isExam,jdbcType=VARCHAR},
+      </if>
+      <if test="isStaging != null">
+        #{isStaging,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolFee != null">
+        #{schoolFee,jdbcType=DECIMAL},
+      </if>
+      <if test="deposit != null">
+        #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test="bookFree != null">
+        #{bookFree,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPay != null">
+        #{firstPay,jdbcType=DECIMAL},
+      </if>
+      <if test="isClear != null">
+        #{isClear,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleTime != null">
+        #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handler != null">
+        #{handler,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="handleStatus != null">
+        #{handleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="packageId != null">
+        #{packageId,jdbcType=INTEGER},
+      </if>
+      <if test="orderAmount != null">
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="classTime != null">
+        #{classTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isHasPf != null">
+        #{isHasPf,jdbcType=VARCHAR},
+      </if>
+      <if test="makeupFee != null">
+        #{makeupFee,jdbcType=DECIMAL},
+      </if>
+        <if test="schoolId != null">
+            #{schoolId},
+        </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.jiacer.modules.mybatis.entity.ApplyOrdersEntity">
+    update apply_orders
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="userAge != null">
+        user_age = #{userAge,jdbcType=INTEGER},
+      </if>
+      <if test="classNumber != null">
+          class_id = #{classNumber,jdbcType=INTEGER},
+      </if>
+      <if test="isExam != null">
+        is_exam = #{isExam,jdbcType=VARCHAR},
+      </if>
+      <if test="isStaging != null">
+        is_staging = #{isStaging,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolFee != null">
+        school_fee = #{schoolFee,jdbcType=DECIMAL},
+      </if>
+      <if test="deposit != null">
+        deposit = #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test="bookFree != null">
+        book_free = #{bookFree,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPay != null">
+        first_pay = #{firstPay,jdbcType=DECIMAL},
+      </if>
+      <if test="isClear != null">
+        is_clear = #{isClear,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleTime != null">
+        handle_time = #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handler != null">
+        handler = #{handler,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="handleStatus != null">
+        handle_status = #{handleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="packageId != null">
+        package_id = #{packageId,jdbcType=INTEGER},
+      </if>
+      <if test="orderAmount != null">
+        order_amount = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="classTime != null">
+        class_time = #{classTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isHasPf != null">
+        is_has_pf = #{isHasPf,jdbcType=VARCHAR},
+      </if>
+      <if test="makeupFee != null">
+        makeup_fee = #{makeupFee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="count" parameterType="map" resultType="int">
+  	select 
+    count(0)
+    from apply_orders
+    <where>
+    	<if test="handleStatus != null and handleStatus != ''">
+    		handle_status = #{handleStatus,jdbcType=VARCHAR}
+    	</if>
+    	<if test="orderType != null and orderType != ''">
+    		and order_type = #{orderType,jdbcType=VARCHAR}
+    	</if>
+    	<if test="packageId != null and packageId != ''">
+    		and package_id = #{packageId,jdbcType=INTEGER}
+    	</if>
+    	<if test="courseId != null">
+        	and course_id = #{courseId,jdbcType=INTEGER}
+      	</if>
+    	<if test="orderTypeList != null and orderTypeList.size()!=0">
+    		and order_type in
+			<foreach item="item" index="index" collection="orderTypeList" open="(" separator="," close=")">
+			  #{item}
+			</foreach>
+    	</if>
+    	<if test="dateType==1">
+    		<if test="startDate !=null and startDate !=''">
+    			and order_time &gt;= #{startDate,jdbcType=TIMESTAMP}
+	    	</if>
+	    	<if test="endDate !=null and endDate !=''">
+	    		and order_time &lt;= #{endDate,jdbcType=TIMESTAMP}
+	    	</if>
+    	</if>
+    	<if test="dateType==2">
+    		<if test="startDate !=null and startDate !=''">
+    			and handle_time &gt;= #{startDate,jdbcType=TIMESTAMP}
+	    	</if>
+	    	<if test="endDate !=null and endDate !=''">
+	    		and handle_time &lt;= #{endDate,jdbcType=TIMESTAMP}
+	    	</if>
+    	</if>
+    	<if test="userName != null and userName != ''">
+    		and USER_ID in (SELECT A.user_id FROM user_extend_info A
+	    	<where>
+		    	<if test="userName != null and userName != ''">
+		    		A.user_name like #{userName,jdbcType=VARCHAR}
+		    	</if>
+	    	</where>
+	    	)
+    	</if>
+    </where>
+  </select>
+  
+  <select id="getPageList" parameterType="map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from apply_orders
+    <where>
+    	<if test="handleStatus != null and handleStatus != ''">
+    		handle_status = #{handleStatus,jdbcType=VARCHAR}
+    	</if>
+    	<if test="orderType != null and orderType != ''">
+    		and order_type = #{orderType,jdbcType=VARCHAR}
+    	</if>
+    	<if test="packageId != null and packageId != ''">
+    		and package_id = #{packageId,jdbcType=INTEGER}
+    	</if>
+    	<if test="courseId != null">
+        	and course_id = #{courseId,jdbcType=INTEGER}
+      	</if>
+    	<if test="orderTypeList != null and orderTypeList.size()!=0">
+    		and order_type in
+			<foreach item="item" index="index" collection="orderTypeList" open="(" separator="," close=")">
+			  #{item}
+			</foreach>
+    	</if>
+    	<if test="dateType==1">
+    		<if test="startDate !=null and startDate !=''">
+    			and order_time &gt;= #{startDate,jdbcType=TIMESTAMP}
+	    	</if>
+	    	<if test="endDate !=null and endDate !=''">
+	    		and order_time &lt;= #{endDate,jdbcType=TIMESTAMP}
+	    	</if>
+    	</if>
+    	<if test="dateType==2">
+    		<if test="startDate !=null and startDate !=''">
+    			and handle_time &gt;= #{startDate,jdbcType=TIMESTAMP}
+	    	</if>
+	    	<if test="endDate !=null and endDate !=''">
+	    		and handle_time &lt;= #{endDate,jdbcType=TIMESTAMP}
+	    	</if>
+    	</if>
+    	<if test="userName != null and userName != ''">
+    		and USER_ID in (SELECT A.user_id FROM user_extend_info A
+	    	<where>
+		    	<if test="userName != null and userName != ''">
+		    		A.user_name like #{userName,jdbcType=VARCHAR}
+		    	</if>
+	    	</where>
+	    	)
+    	</if>
+    </where>
+    <if test="dateType==1">
+    	 order by order_time desc
+    </if>
+    <if test="dateType==2">
+    	 order by handle_time desc
+    </if>
+    <if test="offset !=null">
+    	limit #{offset},#{pageSize}
+    </if>
+  </select>
+  
+  <select id="getList" parameterType="com.jiacer.modules.mybatis.entity.ApplyOrdersEntity" resultMap="BaseResultMap">
+    select
+      o.id, o.user_id, o.course_id, o.class_id, o.is_exam, o.is_staging, o.school_fee, o.deposit, o.book_free,
+      o.remarks, o.first_pay, o.is_clear, o.order_time, o.handle_time, o.handler, o.order_status, o.handle_status,
+      o.package_id, o.order_amount, o.order_type, o.class_time, o.modify_time, o.order_no,o.is_has_pf,
+      o.makeup_fee,o.user_age,p.package_name
+    from apply_orders o inner join course_package p on o.package_id = p.id
+    <where>
+        <if test="handleStatus != null and handleStatus != ''">
+            o.handle_status = #{handleStatus,jdbcType=VARCHAR}
+        </if>
+        <if test="hstatusList != null and hstatusList.size() != 0">
+            o.handle_status in
+            <foreach item="item" index="index" collection="hstatusList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    	<if test="orderType != null and orderType != ''">
+    		and o.order_type = #{orderType,jdbcType=VARCHAR}
+    	</if>
+    	<if test="packageId != null and packageId != ''">
+    		and o.package_id = #{packageId,jdbcType=INTEGER}
+    	</if>
+        <if test="courseId != null and courseId != ''">
+            and o.course_id = #{courseId,jdbcType=INTEGER}
+        </if>
+        <if test="userId != null and userId != ''">
+            and o.user_id = #{userId,jdbcType=INTEGER}
+        </if>
+    </where>
+      order by id desc
+  </select>
+  
+  <select id="findAllList" parameterType="com.jiacer.modules.mybatis.entity.ApplyOrdersEntity" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from apply_orders
+    <where>
+    	<if test="userId != null">
+	        user_id = #{userId,jdbcType=INTEGER}
+	    </if>
+    	<if test="handleStatus != null and handleStatus != ''">
+    		and handle_status = #{handleStatus,jdbcType=VARCHAR}
+    	</if>
+    	<if test="orderType != null and orderType != ''">
+    		and order_type = #{orderType,jdbcType=VARCHAR}
+    	</if>
+    	<if test="packageId != null and packageId != ''">
+    		and package_id = #{packageId,jdbcType=INTEGER}
+    	</if>
+    	<if test="courseId != null and courseId != ''">
+    		and course_id = #{courseId,jdbcType=INTEGER}
+    	</if>
+    	<if test="classNumber != null and classNumber != ''">
+    		and class_id = #{classNumber,jdbcType=INTEGER}
+    	</if>
+    	<if test="hstatusList != null and hstatusList.size()!=0">
+    		and handle_status in
+			<foreach item="item" index="index" collection="hstatusList" open="(" separator="," close=")">
+			  #{item}
+			</foreach>
+    	</if>
+    	<if test="courseIdList != null and courseIdList.size()!=0">
+    		and course_id in
+			<foreach item="item" index="index" collection="courseIdList" open="(" separator="," close=")">
+			  #{item}
+			</foreach>
+    	</if>
+    </where>
+      order by id desc
+  </select>
+  
+  <select id="findAllCount" parameterType="com.jiacer.modules.mybatis.entity.ApplyOrdersEntity" resultType="int">
+    select 
+    count(0)
+    from apply_orders
+    <where>
+    	<if test="userId != null">
+	        user_id = #{userId,jdbcType=INTEGER}
+	    </if>
+    	<if test="handleStatus != null and handleStatus != ''">
+    		and handle_status = #{handleStatus,jdbcType=VARCHAR}
+    	</if>
+    	<if test="orderType != null and orderType != ''">
+    		and order_type = #{orderType,jdbcType=VARCHAR}
+    	</if>
+    	<if test="packageId != null">
+    		and package_id = #{packageId,jdbcType=INTEGER}
+    	</if>
+    	<if test="courseId != null">
+    		and course_id = #{courseId,jdbcType=INTEGER}
+    	</if>
+    	<if test="classNumber != null and classNumber != ''">
+    		and class_id = #{classNumber,jdbcType=INTEGER}
+    	</if>
+    	<if test="hstatusList != null and hstatusList.size()!=0">
+    		and handle_status in
+			<foreach item="item" index="index" collection="hstatusList" open="(" separator="," close=")">
+			  #{item}
+			</foreach>
+    	</if>
+    </where>
+  </select>
+  
+    <select id="getEnrolledCourses" parameterType="com.jiacer.modules.mybatis.entity.ApplyOrdersEntity" resultType="java.lang.Integer">
+    select 
+    course_id
+    from apply_orders
+    where user_id = #{userId,jdbcType=INTEGER}
+    and handle_status in ('02','04')
+    and order_status = '05'
+        order by id desc
+  </select>
+  
+  <select id="getUserAnswerCourses" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT  DISTINCT A.course_id FROM apply_orders A
+	WHERE 
+	A.user_id=#{userId,jdbcType=INTEGER}
+	AND A.handle_status ='02'
+	AND  A.course_id IN (
+		SELECT B.course_id FROM courses_configs B
+		WHERE B.configs_code='SP'
+	)
+  </select>
+  
+    
+</mapper>

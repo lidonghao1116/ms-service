@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.BrokerageRulesMapper">
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.BrokerageRulesEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="package_id" jdbcType="INTEGER" property="packageId" />
+    <result column="bonus_type" jdbcType="VARCHAR" property="bonusType" />
+    <result column="scheme_id" jdbcType="INTEGER" property="schemeId" />
+    <result column="bonus_amount" jdbcType="DECIMAL" property="bonusAmount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, package_id, bonus_type, scheme_id, bonus_amount
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from brokerage_rules
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getByKeys" parameterType="com.jiacer.modules.mybatis.entity.BrokerageRulesEntity" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from brokerage_rules
+    where package_id = #{packageId,jdbcType=INTEGER}
+    and scheme_id= #{schemeId,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.BrokerageRulesEntity">
+    insert into brokerage_rules
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="packageId != null">
+        package_id,
+      </if>
+      <if test="bonusType != null">
+        bonus_type,
+      </if>
+      <if test="schemeId != null">
+        scheme_id,
+      </if>
+      <if test="bonusAmount != null">
+        bonus_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="packageId != null">
+        #{packageId,jdbcType=INTEGER},
+      </if>
+      <if test="bonusType != null">
+        #{bonusType,jdbcType=VARCHAR},
+      </if>
+      <if test="schemeId != null">
+        #{schemeId,jdbcType=INTEGER},
+      </if>
+      <if test="bonusAmount != null">
+        #{bonusAmount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.jiacer.modules.mybatis.entity.BrokerageRulesEntity">
+    update brokerage_rules
+    <set>
+      <if test="packageId != null">
+        package_id = #{packageId,jdbcType=INTEGER},
+      </if>
+      <if test="bonusType != null">
+        bonus_type = #{bonusType,jdbcType=VARCHAR},
+      </if>
+      <if test="schemeId != null">
+        scheme_id = #{schemeId,jdbcType=INTEGER},
+      </if>
+      <if test="bonusAmount != null">
+        bonus_amount = #{bonusAmount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findAllList" parameterType="com.jiacer.modules.mybatis.entity.BrokerageRulesEntity" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from brokerage_rules
+    <where>
+    	<if test="packageId != null">
+        	package_id = #{packageId,jdbcType=INTEGER}
+      	</if>
+    	<if test="schemeId != null">
+    		and scheme_id = #{schemeId,jdbcType=INTEGER}
+    	</if>
+    </where>
+    order by id asc
+  </select>
+ 
+</mapper>

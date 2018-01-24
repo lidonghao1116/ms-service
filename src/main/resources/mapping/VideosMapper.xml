@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.VideosMapper">
+    <resultMap id="BaseResultMap"
+               type="com.jiacer.modules.mybatis.entity.VideosEntity">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="video_name" jdbcType="VARCHAR" property="videoName"/>
+        <result column="cover_photo" jdbcType="VARCHAR" property="coverPhoto"/>
+        <result column="video_size" jdbcType="INTEGER" property="videoSize"/>
+        <result column="video_format" jdbcType="VARCHAR" property="videoFormat"/>
+        <result column="video_url" jdbcType="VARCHAR" property="videoUrl"/>
+        <result column="video_desc" jdbcType="VARCHAR" property="videoDesc"/>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"/>
+        <result column="is_usable" jdbcType="VARCHAR" property="isUsable"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="add_account" jdbcType="VARCHAR" property="addAccount"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modify_account" jdbcType="VARCHAR" property="modifyAccount"/>
+        <result column="chapter_code" jdbcType="VARCHAR" property="chapterCode"/>
+        <result column="course_id" jdbcType="INTEGER" property="courseId"/>
+        <result column="is_guest_watch" jdbcType="INTEGER" property="isGuestWatch"/>
+        <result column="chapter_no" jdbcType="VARCHAR" property="chapterNo"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, video_name, cover_photo, video_size, video_format, video_url, video_desc, type_id,
+        is_usable, add_time, add_account, modify_time, modify_account, chapter_code, course_id, is_guest_watch
+    </sql>
+    <select id="getById" parameterType="java.lang.Integer"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from videos
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.VideosEntity">
+        insert into videos
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="videoName != null">
+                video_name,
+            </if>
+            <if test="coverPhoto != null">
+                cover_photo,
+            </if>
+            <if test="videoSize != null">
+                video_size,
+            </if>
+            <if test="videoFormat != null">
+                video_format,
+            </if>
+            <if test="videoUrl != null">
+                video_url,
+            </if>
+            <if test="videoDesc != null">
+                video_desc,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="isUsable != null">
+                is_usable,
+            </if>
+            <if test="addTime != null">
+                add_time,
+            </if>
+            <if test="addAccount != null">
+                add_account,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="modifyAccount != null">
+                modify_account,
+            </if>
+            <if test="chapterCode != null">
+                chapter_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="videoName != null">
+                #{videoName,jdbcType=VARCHAR},
+            </if>
+            <if test="coverPhoto != null">
+                #{coverPhoto,jdbcType=VARCHAR},
+            </if>
+            <if test="videoSize != null">
+                #{videoSize,jdbcType=INTEGER},
+            </if>
+            <if test="videoFormat != null">
+                #{videoFormat,jdbcType=VARCHAR},
+            </if>
+            <if test="videoUrl != null">
+                #{videoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="videoDesc != null">
+                #{videoDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="isUsable != null">
+                #{isUsable,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="addAccount != null">
+                #{addAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyAccount != null">
+                #{modifyAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="chapterCode != null">
+                #{chapterCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.jiacer.modules.mybatis.entity.VideosEntity">
+        update videos
+        <set>
+            <if test="videoName != null">
+                video_name = #{videoName,jdbcType=VARCHAR},
+            </if>
+            <if test="coverPhoto != null">
+                cover_photo = #{coverPhoto,jdbcType=VARCHAR},
+            </if>
+            <if test="videoSize != null">
+                video_size = #{videoSize,jdbcType=INTEGER},
+            </if>
+            <if test="videoFormat != null">
+                video_format = #{videoFormat,jdbcType=VARCHAR},
+            </if>
+            <if test="videoUrl != null">
+                video_url = #{videoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="videoDesc != null">
+                video_desc = #{videoDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="isUsable != null">
+                is_usable = #{isUsable,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="addAccount != null">
+                add_account = #{addAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyAccount != null">
+                modify_account = #{modifyAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="chapterCode != null">
+                chapter_code = #{chapterCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getVideos" parameterType="com.jiacer.modules.mybatis.entity.VideosEntity" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from videos
+        <where>
+            <if test="typeId !=null">
+                type_id = #{typeId,jdbcType=INTEGER}
+            </if>
+            <if test="chapterCode !=null and chapterCode !=''">
+                and chapter_code = #{chapterCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by chapter_no,sort_no asc
+    </select>
+    <select id="getVideosByCourseId" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        v.id,
+        v.video_name,
+        v.cover_photo,
+        v.video_size,
+        v.video_format,
+        if(o.order_no is null and v.is_guest_watch=0, '', v.video_url) as video_url,
+        v.video_desc,
+        v.course_id,
+        v.is_guest_watch,
+        v.chapter_no
+        from videos v left join orders o on v.course_id=o.course_id and o.user_id=#{userId} and pay_type='02'
+        where v.is_usable = 1
+        and v.course_id = #{courseId}
+        order by v.chapter_no,v.sort_no asc
+    </select>
+
+</mapper>

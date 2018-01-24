@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.QuestionsMapper">
+	<resultMap id="BaseResultMap"
+		type="com.jiacer.modules.mybatis.entity.QuestionsEntity">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="QUESTION_TYPE" jdbcType="VARCHAR" property="questionType" />
+		<result column="QUESTION" jdbcType="VARCHAR" property="question" />
+		<result column="IS_USABLE" jdbcType="VARCHAR" property="isUsabled" />
+		<result column="ADD_ACCOUNT" jdbcType="VARCHAR" property="addAccount" />
+		<result column="ADD_TIME" jdbcType="TIMESTAMP" property="addTime" />
+		<result column="UPDATE_ACCOUNT" jdbcType="VARCHAR" property="updateAccount" />
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="type_id" jdbcType="INTEGER" property="typeId" />
+		<result column="course_id" jdbcType="INTEGER" property="courseId" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, QUESTION_TYPE, QUESTION, IS_USABLE, ADD_ACCOUNT, ADD_TIME,
+		UPDATE_ACCOUNT,
+		UPDATE_TIME, type_id,course_id
+	</sql>
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from questions
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.QuestionsEntity">
+		insert into questions
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="questionType != null">
+				QUESTION_TYPE,
+			</if>
+			<if test="question != null">
+				QUESTION,
+			</if>
+			<if test="isUsable != null">
+				IS_USABLE,
+			</if>
+			<if test="addAccount != null">
+				ADD_ACCOUNT,
+			</if>
+			<if test="addTime != null">
+				ADD_TIME,
+			</if>
+			<if test="updateAccount != null">
+				UPDATE_ACCOUNT,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+			<if test="typeId != null">
+				type_id,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="questionType != null">
+				#{questionType,jdbcType=VARCHAR},
+			</if>
+			<if test="question != null">
+				#{question,jdbcType=VARCHAR},
+			</if>
+			<if test="isUsable != null">
+				#{isUsable,jdbcType=VARCHAR},
+			</if>
+			<if test="addAccount != null">
+				#{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateAccount != null">
+				#{updateAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="typeId != null">
+				#{typeId,jdbcType=INTEGER},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.jiacer.modules.mybatis.entity.QuestionsEntity">
+		update questions
+		<set>
+			<if test="questionType != null">
+				QUESTION_TYPE = #{questionType,jdbcType=VARCHAR},
+			</if>
+			<if test="question != null">
+				QUESTION = #{question,jdbcType=VARCHAR},
+			</if>
+			<if test="isUsable != null">
+				IS_USABLE = #{isUsable,jdbcType=VARCHAR},
+			</if>
+			<if test="addAccount != null">
+				ADD_ACCOUNT = #{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateAccount != null">
+				UPDATE_ACCOUNT = #{updateAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="typeId != null">
+				type_id = #{typeId,jdbcType=INTEGER},
+			</if>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+
+
+	<resultMap id="AnswersResultMap" type="com.jiacer.modules.mybatis.entity.AnswersEntity">
+	   	<id column="ID" jdbcType="INTEGER" property="id" />
+	    <result column="ANSWER_DESC" jdbcType="VARCHAR" property="answerDesc" />
+	    <result column="IS_ANSWER" jdbcType="VARCHAR" property="isAnswer" />
+  	</resultMap>
+  	
+  	<resultMap id="QuestionsMap" type="com.jiacer.modules.mybatis.entity.QuestionsEntity">
+		<result column="ID" jdbcType="INTEGER" property="id" />
+		<result column="QUESTION" jdbcType="VARCHAR" property="question" />
+		<result column="QUESTION_TYPE" jdbcType="VARCHAR" property="questionType" />
+		<collection property="answers" javaType="ArrayList" column="ID" select="getAnswersByQuestionId"/>
+	</resultMap>
+	
+	<sql id="Questions_Column_List">
+    	ID, QUESTION_TYPE, QUESTION, IS_USABLE
+  	</sql>
+	
+	<sql id="Answer_Column_List">
+    	ID, ANSWER_DESC, IS_ANSWER
+  	</sql>
+	
+  	<select id="getQuestions" resultMap="QuestionsMap" parameterType="com.jiacer.modules.mybatis.entity.QuestionsEntity">
+    	select 
+    	<include refid="Questions_Column_List" />
+    	from questions
+    	where IS_USABLE=1
+		<if test="typeId != null">
+			and type_id = #{typeId,jdbcType=INTEGER}
+		</if>
+		<if test="courseId != null">
+			and course_id = #{courseId,jdbcType=INTEGER}
+		</if>
+		and question_type =#{questionType,jdbcType=VARCHAR}
+  	</select>
+	
+	<select id="getAnswersByQuestionId" parameterType="int" resultMap="AnswersResultMap">
+  		select 
+	    <include refid="Answer_Column_List" />
+	    from answers
+	    where QUESTIONS_ID = #{id,jdbcType=INTEGER}
+	    AND IS_USABLE=1
+  	</select>
+  	
+  	<select id="getQuestionsById" resultMap="QuestionsMap" parameterType="com.jiacer.modules.mybatis.entity.QuestionsEntity">
+    	select 
+    	<include refid="Questions_Column_List" />
+    	from questions
+    	where IS_USABLE=1
+    	and ID = #{id,jdbcType=INTEGER}
+  	</select>
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.AreasMapper">
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.AreasEntity">
+    <id column="AREA_CODE" jdbcType="VARCHAR" property="areaCode" />
+    <result column="AREA_NAME" jdbcType="VARCHAR" property="areaName" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="AREA_LEVEL" jdbcType="VARCHAR" property="areaLevel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    AREA_CODE, AREA_NAME, PARENT_CODE, AREA_LEVEL
+  </sql>
+  <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from areas
+    where AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+  </select>
+
+ 
+  <insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.AreasEntity">
+    insert into areas
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="areaCode != null">
+        AREA_CODE,
+      </if>
+      <if test="areaName != null">
+        AREA_NAME,
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE,
+      </if>
+      <if test="areaLevel != null">
+        AREA_LEVEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null">
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaLevel != null">
+        #{areaLevel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.jiacer.modules.mybatis.entity.AreasEntity">
+    update areas
+    <set>
+      <if test="areaName != null">
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaLevel != null">
+        AREA_LEVEL = #{areaLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+  </update>
+  
+  
+  	<sql id="areasJoins">
+		LEFT JOIN areas p ON p.area_code = a.parent_code
+	</sql>
+   
+   	<sql id="areasColumns">
+		a.AREA_CODE as 'areaCode', a.AREA_NAME as 'areaName', a.PARENT_CODE as 'parentCode', a.AREA_LEVEL as 'areaLevel',
+		p.AREA_CODE AS 'parent.areaCode', p.AREA_NAME AS 'parent.areaName', p.PARENT_CODE  AS 'parent.parentCode', p.AREA_LEVEL AS 'parent.areaLevel'
+	</sql>
+  
+  <select id="getAreas" resultType="com.jiacer.modules.mybatis.entity.AreasEntity">
+  	select 
+    <include refid="areasColumns"/>
+    from areas a
+    <include refid="areasJoins"/>
+    order by a.PARENT_CODE asc,a.AREA_CODE ASC
+  </select>
+  
+  <select id="findAllList" parameterType="com.jiacer.modules.mybatis.entity.AreasEntity" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from areas
+    <where>
+    	<if test="parentCode != null and parentCode != ''">
+        	PARENT_CODE = #{parentCode,jdbcType=VARCHAR}
+      	</if>
+      	<if test="areaLevel != null and areaLevel != ''">
+       		and AREA_LEVEL = #{areaLevel,jdbcType=VARCHAR}
+      	</if>
+      	<if test="areaCode != null and areaCode != ''">
+      		and AREA_CODE = #{areaCode,jdbcType=VARCHAR}
+      	</if>
+    </where>
+    order by AREA_CODE desc
+  </select>
+
+  <select id="getCityKV" resultType="java.util.HashMap">
+    select
+      area_code, area_name
+    from areas
+  </select>
+
+
+</mapper>

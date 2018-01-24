@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiacer.modules.mybatis.dao.UserExtendInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jiacer.modules.mybatis.entity.UserExtendInfoEntity">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="source_value" jdbcType="VARCHAR" property="sourceValue" />
+    <result column="owned_teacher" jdbcType="VARCHAR" property="ownedTeacher" />
+    <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
+    <result column="source_type_sec" jdbcType="VARCHAR" property="sourceTypeSec" />
+    <result column="cert_no" jdbcType="VARCHAR" property="certNo" />
+    <result column="cert_type" jdbcType="VARCHAR" property="certType" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="birthplace" jdbcType="VARCHAR" property="birthplace" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="source_remarks" jdbcType="VARCHAR" property="sourceRemarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, source_value, owned_teacher, source_type, source_type_sec, cert_no, cert_type, 
+    education, nation, birthplace, address, contacts, contact_phone, age, sex, add_time, 
+    modify_time, user_name, source_remarks
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_extend_info
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insert" parameterType="com.jiacer.modules.mybatis.entity.UserExtendInfoEntity">
+    insert into user_extend_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="sourceValue != null">
+        source_value,
+      </if>
+      <if test="ownedTeacher != null">
+        owned_teacher,
+      </if>
+      <if test="sourceType != null">
+        source_type,
+      </if>
+      <if test="sourceTypeSec != null">
+        source_type_sec,
+      </if>
+      <if test="certNo != null">
+        cert_no,
+      </if>
+      <if test="certType != null">
+        cert_type,
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="nation != null">
+        nation,
+      </if>
+      <if test="birthplace != null">
+        birthplace,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="contacts != null">
+        contacts,
+      </if>
+      <if test="contactPhone != null">
+        contact_phone,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="sourceRemarks != null">
+        source_remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sourceValue != null">
+        #{sourceValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ownedTeacher != null">
+        #{ownedTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceTypeSec != null">
+        #{sourceTypeSec,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null">
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certType != null">
+        #{certType,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null">
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceRemarks != null">
+        #{sourceRemarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.jiacer.modules.mybatis.entity.UserExtendInfoEntity">
+    update user_extend_info
+    <set>
+      <if test="sourceValue != null">
+        source_value = #{sourceValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ownedTeacher != null">
+        owned_teacher = #{ownedTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        source_type = #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceTypeSec != null">
+        source_type_sec = #{sourceTypeSec,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null">
+        cert_no = #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certType != null">
+        cert_type = #{certType,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        birthplace = #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null">
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceRemarks != null">
+        source_remarks = #{sourceRemarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="get" parameterType="com.jiacer.modules.mybatis.entity.UserExtendInfoEntity" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_extend_info
+    <where>
+    	<if test="certNo != null and certNo != ''">
+        	cert_no = #{certNo,jdbcType=VARCHAR}
+      	</if>
+    </where>
+  </select>
+  
+ 	<select id="countByCertNo" parameterType="String" resultType="int">
+ 		select count(user_id) from user_extend_info where cert_no = #{certNo,jdbcType=VARCHAR}
+	</select>
+</mapper>
